@@ -37,7 +37,7 @@ const footerLinks = [
 const TITLE = "DeHi";
 const DOMAIN = "https://dehi.app";
 const CREATOR = "@joeblau";
-const SOCIAL_IMAGE = "/images/social.png";
+const SOCIAL_IMAGE = `${DOMAIN}/images/social.png`;
 
 export default function Home(props: any) {
   const description = String(props.description);

@@ -117,9 +117,9 @@ export default function Home(props: any) {
                       />
 
                       <div className="flex-1 space-y-2 overflow-ellipsis overflow-hidden">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-wrap items-center justify-between">
                           <div className="flex space-x-6">
-                            <h3 className="text-sm font-medium font-mono text-gray-400">
+                            <h3 className="text-sm font-medium font-mono text-gray-500">
                               {" "}
                               {shortAddress(timelineMessage.user)}
                             </h3>
@@ -129,7 +129,7 @@ export default function Home(props: any) {
                               </span>
                             ) : null}
                           </div>
-                          <p className="text-sm font-mono text-gray-400">
+                          <p className="text-xs font-mono text-gray-400">
                             {timelineMessage.date}
                           </p>
                         </div>

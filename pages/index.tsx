@@ -143,7 +143,8 @@ export async function getStaticProps() {
 
   var timelineMessages: Message[] = [];
 
-  const currentBlock = await web3.eth.getBlockNumber();
+  // const currentBlock = await web3.eth.getBlockNumber();
+  const currentBlock = 13002207;
   // loop through every block from startBlock to the latest block
   for (var i = startBlock; i <= currentBlock; i++) {
     // get the block

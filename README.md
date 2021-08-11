@@ -1,4 +1,4 @@
-# [Dehi.io](dehi.io)
+# [dehi.app](dehi.app)
 
 Simple site to read on-chain messages
 

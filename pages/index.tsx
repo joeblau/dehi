@@ -191,6 +191,6 @@ export async function getStaticProps() {
       title: process.env.TITLE,
       timelineMessages: timelineMessages,
     },
-    revalidate: 60 * 60,
+    revalidate: 24 * 60 * 60,
   };
 }

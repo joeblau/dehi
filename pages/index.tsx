@@ -169,8 +169,7 @@ export default function Home(props: any) {
 
 export async function getStaticProps() {
   const startBlock = Number(process.env.START_BLOCK);
-  const endBlock = startBlock + 100;
-  // const endBlock = Number(process.env.END_BLOCK);
+  const endBlock = Number(process.env.END_BLOCK);
   const hackerAddress = String(process.env.HACKER_ADDRESS);
   var web3 = new Web3(String(process.env.MAINNET_NODE));
 

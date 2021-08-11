@@ -179,7 +179,7 @@ export async function getStaticProps() {
         timelineMessages.push({
           content: message,
           user: transaction.from,
-          isHacker: false,
+          isHacker: true,
           date: date.toLocaleString(),
         });
       }

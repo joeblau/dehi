@@ -40,7 +40,7 @@ const CREATOR = "@joeblau";
 const SOCIAL_IMAGE = "/images/social.png";
 
 export default function Home(props: any) {
-  const description = String(props.title);
+  const description = String(props.description);
   const timelineMessages: Message[] = props.timelineMessages;
 
   const shortAddress = (address: string) => (
@@ -55,6 +55,8 @@ export default function Home(props: any) {
         <meta name="application-name" content={TITLE} />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
         <meta name="apple-mobile-web-app-title" content={TITLE} />
         <meta name="description" content={description} />
         <meta name="format-detection" content="telephone=no" />
@@ -91,7 +93,7 @@ export default function Home(props: any) {
                   DeHi
                 </h1>
                 <p className="text-base font-semibold text-gray-400 tracking-wide uppercase">
-                  {title}
+                  {description}
                 </p>
               </div>
             </div>
@@ -167,7 +169,8 @@ export default function Home(props: any) {
 
 export async function getStaticProps() {
   const startBlock = Number(process.env.START_BLOCK);
-  const endBlock = Number(process.env.END_BLOCK);
+  const endBlock = startBlock + 100;
+  // const endBlock = Number(process.env.END_BLOCK);
   const hackerAddress = String(process.env.HACKER_ADDRESS);
   var web3 = new Web3(String(process.env.MAINNET_NODE));
 
@@ -189,7 +192,13 @@ export async function getStaticProps() {
         transaction.to === hackerAddress &&
         transaction.from !== hackerAddress
       ) {
-        const message = web3.utils.toAscii(transaction.input);
+        // try to decode input
+        var message = "";
+        try {
+          message = web3.utils.toUtf8(transaction.input);
+        } catch (e) {
+          message = web3.utils.toAscii(transaction.input);
+        }
         // if message string is empty, skip
         if (message.length === 0) {
           continue;
@@ -203,7 +212,13 @@ export async function getStaticProps() {
       }
       // message from the hacker
       if (transaction.from === hackerAddress) {
-        const message = web3.utils.toAscii(transaction.input);
+        var message = "";
+        try {
+          message = web3.utils.toUtf8(transaction.input);
+        } catch (e) {
+          message = web3.utils.toAscii(transaction.input);
+        }
+
         if (message.length === 0) {
           continue;
         }

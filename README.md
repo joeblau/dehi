@@ -13,7 +13,7 @@ yarn dev
 Configure `.env.local`
 
 ```
-TITLE=Polygon Network Hacker Chat Feed
+TITLE=Poly Network Hacker Chat Feed
 START_BLOCK=12997793
 END_BLOCK=13002435
 HACKER_ADDRESS=0xC8a65Fadf0e0dDAf421F28FEAb69Bf6E2E589963

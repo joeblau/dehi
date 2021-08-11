@@ -203,6 +203,7 @@ export async function getStaticProps() {
         // if message string is empty, skip
         if (message.length === 0) {
           continue;
+          ``;
         }
         timelineMessages.push({
           content: message,
@@ -238,6 +239,6 @@ export async function getStaticProps() {
       description: process.env.DESCRIPTION,
       timelineMessages: timelineMessages,
     },
-    revalidate: 24 * 60 * 60,
+    revalidate: 2 * 60 * 60,
   };
 }

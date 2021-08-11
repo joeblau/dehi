@@ -172,7 +172,7 @@ export async function getStaticProps() {
 
   const currentBlock = await web3.eth.getBlockNumber();
   const startBlock = Number(process.env.START_BLOCK);
-  const endBlock = currentBlock; // const endBlock = Number(process.env.END_BLOCK);
+  const endBlock = Number(process.env.END_BLOCK) || currentBlock;
   const hackerAddress = String(process.env.HACKER_ADDRESS);
 
   var timelineMessages: Message[] = [];

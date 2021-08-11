@@ -34,8 +34,13 @@ const footerLinks = [
   },
 ];
 
+const TITLE = "DeHi";
+const DOMAIN = "https://dehi.app";
+const CREATOR = "@joeblau";
+const SOCIAL_IMAGE = "/images/social.png";
+
 export default function Home(props: any) {
-  const title = String(props.title);
+  const description = String(props.title);
   const timelineMessages: Message[] = props.timelineMessages;
 
   const shortAddress = (address: string) => (
@@ -47,11 +52,35 @@ export default function Home(props: any) {
   return (
     <div>
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={title} />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+        <meta name="application-name" content={TITLE} />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content={TITLE} />
+        <meta name="description" content={description} />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-TileColor" content="#3B82F6" />
+        <meta name="msapplication-tap-highlight" content="no" />
 
+        {/* Twitter Metadata */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:url" content={DOMAIN} />
+        <meta name="twitter:title" content={TITLE} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={SOCIAL_IMAGE} />
+        <meta name="twitter:creator" content={CREATOR} />
+
+        {/* Open Graph Metadata */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={TITLE} />
+        <meta property="og:description" content={description} />
+        <meta property="og:site_name" content={TITLE} />
+        <meta property="og:url" content={DOMAIN} />
+        <meta property="og:image" content={SOCIAL_IMAGE} />
+
+        {/* Favicons */}
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </Head>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
         <div className="max-w-3xl mx-auto">
@@ -138,15 +167,14 @@ export default function Home(props: any) {
 
 export async function getStaticProps() {
   const startBlock = Number(process.env.START_BLOCK);
+  const endBlock = Number(process.env.END_BLOCK);
   const hackerAddress = String(process.env.HACKER_ADDRESS);
   var web3 = new Web3(String(process.env.MAINNET_NODE));
 
   var timelineMessages: Message[] = [];
 
-  // const currentBlock = await web3.eth.getBlockNumber();
-  const currentBlock = 13002207;
   // loop through every block from startBlock to the latest block
-  for (var i = startBlock; i <= currentBlock; i++) {
+  for (var i = startBlock; i <= endBlock; i++) {
     // get the block
     var block = await web3.eth.getBlock(i, true);
     // get the transactions in the block
@@ -157,7 +185,10 @@ export async function getStaticProps() {
       // if the message is to the hacker
       var date = new Date(Number(block.timestamp) * 1000);
 
-      if (transaction.to === hackerAddress) {
+      if (
+        transaction.to === hackerAddress &&
+        transaction.from !== hackerAddress
+      ) {
         const message = web3.utils.toAscii(transaction.input);
         // if message string is empty, skip
         if (message.length === 0) {
@@ -188,7 +219,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      title: process.env.TITLE,
+      description: process.env.DESCRIPTION,
       timelineMessages: timelineMessages,
     },
     revalidate: 24 * 60 * 60,
